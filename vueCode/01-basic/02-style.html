@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue 样式</title>
+    <script src="vue.js"></script>
+    <style>
+        .greeting {
+            color:red;
+        }
+        .active {
+            font-size:50px !important;
+            color:blue;
+        }
+        .normal{
+            font-size:30px;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <!--一切都是改数据-->
+        <div class="normal" :class="greetingClass" :style="greetingStyle">hello</div>
+        <button @click="change">change</button>
+    </div>
+    <script>
+        // 开发模式下运行，不再进行提示
+        Vue.config.productionTip = false
+        let vm = new Vue({
+            el:"#root",
+            data:{
+                // greetingClass:"greeting"  //字符串
+                /*greetingClass:{ //对象写法
+                    greeting:true,
+                    active:true
+                }*/
+                //数组写法
+                greetingClass:["greeting","active"],
+                //style的样式修改只能使用对象写法，在style值需要计算时才会用到
+                greetingStyle:{
+                    display:"none"
+                }
+            },
+            methods: {
+                change (){
+                   //this.greetingClass= "active"
+                    this.greetingStyle.display = "block"
+                }
+            }
+        })
+    </script>
+</body>
+</html>

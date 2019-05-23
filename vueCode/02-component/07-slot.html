@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>插槽</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<!--<script>
+    Vue.config.productionTip = false
+    const ListItem = {
+        template: `
+            <div>
+                <slot></slot>
+                <slot name="blue"></slot>
+                <slot name="red"></slot>
+            </div>
+
+        `
+    }
+    const List = {
+        components:{
+            ListItem
+        },
+        template:`
+            <list-item>
+                <div slot="red">red</div>
+                <div slot="blue">blue</div>
+                <div>yellow</div>
+            </list-item>
+        `
+    }
+
+    let vm = new Vue({
+        el:'#root',
+        template:`
+            <list></list>
+        `,
+        components:{
+            List
+        }
+    })
+</script>-->
+<!--插槽的子组件向父组件传输数据
+    使用slot-scope
+-->
+<!--<script>
+    Vue.config.productionTip = false
+    const ListItem = {
+        data (){
+            return {
+                title:'今天你吃了吗'
+            }
+        },
+        template: `
+            <div>
+                <slot :title="title"></slot>
+            </div>
+
+        `
+    }
+    const List = {
+        components: {
+            ListItem
+        },
+        template: `
+            <list-item >
+                <template slot-scope="receive">
+                    {{receive.title}}
+                </template>
+            </list-item>
+        `
+    }
+
+    let vm = new Vue({
+        el: '#root',
+        template: `
+            <list></list>
+        `,
+        components: {
+            List
+        }
+    })
+</script>-->
+<!--v-solt指令-->
+<script>
+    Vue.config.productionTip = false
+    const ListItem = {
+        data() {
+            return {
+                title: '今天你吃了吗'
+            }
+        },
+        template: `
+            <div>
+                <slot :title="title"></slot>
+            </div>
+
+        `
+    }
+    const List = {
+        components: {
+            ListItem
+        },
+        template: `
+            <list-item >
+                <template v-slot="receive">
+                    {{receive.title}}
+                </template>
+            </list-item>
+        `
+    }
+
+    let vm = new Vue({
+        el: '#root',
+        template: `
+            <list></list>
+        `,
+        components: {
+            List
+        }
+    })
+</script>
+</body>
+</html>

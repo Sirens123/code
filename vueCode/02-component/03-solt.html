@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件基础</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+<div id="root">
+    <post></post>
+</div>
+<!--<script>
+    Vue.config.productionTip = false
+
+    // post组件
+    Vue.component('post',{
+        data (){
+            return {
+                keywords:''
+            }
+        },
+        template:`
+            <div>
+                <post-list :keywords="keywords"></post-list>
+                <post-form @send='receiveKeywords'></post-form>
+            </div>
+        `,
+        methods:{
+            receiveKeywords(keywords){
+                this.keywords = keywords
+            }
+        }
+    })
+
+    // post-list组件
+    Vue.component('post-list', {
+        props:['keywords'],
+        data(){
+            return {
+                list:[
+                    '苹果',
+                    '香蕉',
+                    '橘子'
+                ]
+            }
+        },
+        template:`
+                <ul>
+                    <post-list-item  :key='index' :handleClick="handleClick" :item="value" v-for="(value,index) in list"></post-list-item>
+                </ul>
+        `,
+        methods:{
+            handleClick(){
+                console.log('goto next page')
+            }
+        },
+        watch:{
+            keywords (newValue,oldValue){
+                this.list.push(newValue)
+            }
+        }
+    })
+    //post-form组件
+    Vue.component('post-form',{
+        data(){
+            return {
+                keywords:''
+            }
+        },
+        template:`
+            <form @submit.prevent>
+                <input type="text" v-model="keywords">
+                <div>
+                    <post-button  @click.native="handleClick">提交</post-button>
+                </div>
+
+            </form>
+        `,
+        methods: {
+            handleClick() {
+                // 专门触发父组件事件的
+                this.$emit('send',this.keywords)
+                this.keywords = ''
+
+            }
+        }
+    })
+
+    //post-button组件，slot插槽
+    Vue.component('post-button', {
+        props:['text'],
+        template: `
+            <button> <slot></slot></button>
+        `
+    })
+
+    // post - list - item组件
+    Vue.component('post-list-item',{
+        props:['item','handleClick'],
+        template:`
+            <li>
+                {{ item }}
+                <post-button @click.native="handleClick">进入</post-button>
+            </li>
+        `
+    })
+    // 根组件
+    let vm = new Vue({
+        el:"#root"
+    })
+</script>-->
+
+<!--插槽和中间人组件-->
+<script>
+    Vue.config.productionTip = false
+    // 1.post-button组件
+    Vue.component('post-button',{
+        template:`
+            <button><slot></slot></button>
+        `
+    })
+
+    // 2.post-li组件
+    Vue.component('post-li', {
+        props:['item','handleClick'],
+        template: `
+            <li>
+                {{ item }}
+                <post-button @click.native="handleClick">进入</post-button>
+            </li>
+        `
+    })
+
+    // 3.post-list组件
+    Vue.component('post-list', {
+        props:['inputValue'],
+        data (){
+            return {
+                list:['张三','李四','王五']
+            }
+        },
+        template: `
+            <ol>
+                <post-li :key="index" v-for="(value,index) in list" :item="value" :handleClick="handleClick">
+                    {{ value }}
+                </post-li>
+            </ol>
+        `,
+        methods:{
+            handleClick(){
+                console.log('list')
+            }
+        },
+        watch:{
+            inputValue(newValue,oldValue){
+                this.list.push(newValue)
+            }
+        }
+    })
+
+    // 4.post-form组件
+    Vue.component('post-form', {
+        data(){
+            return {
+                inputValue:''
+            }
+        },
+        template: `
+            <form @submit.prevent>
+                <input type="text" v-model="inputValue">
+                <post-button @click.native="handleClick">添加</post-button>
+            </form>
+        `,
+        methods:{
+            handleClick(inputValue){
+                // 触发父组件的事件函数，专门的一个函数方法
+                this.$emit('send',this.inputValue)
+            }
+        }
+    })
+
+    // 5.post组件
+    Vue.component('post', {
+        data(){
+            return {
+                inputValue:''
+            }
+        },
+        template: `
+            <div>
+                <post-list :inputValue="inputValue"></post-list>
+                <post-form @send="receiveValue"></post-form>
+            </div>
+        `,
+        methods:{
+            receiveValue(inputValue){
+                this.inputValue = inputValue
+            }
+        }
+    })
+
+    // 根组件
+    let vm = new Vue({
+        el:'#root'
+    })
+</script>
+</body>
+</html>

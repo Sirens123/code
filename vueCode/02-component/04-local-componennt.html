@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件基础</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+<div id="root">
+    <greeting-world></greeting-world>
+    <post></post>
+</div>
+<!--局部组件
+    局部组件就是一个对象，不能在子组件中使用，除非挂载
+    局部组件定义时需要使用驼峰写法，挂载要用肉串写法
+-->
+<script>
+    Vue.config.productionTip = false
+
+    //0.局部组件greeting
+    const greetingWorld = {
+        data(){
+            return {
+                name: '马云飞'
+            }
+
+        },
+        template:`
+            <h2>hello world！ {{ name }}</h2>
+
+        `
+    }
+
+    // 1.post-button组件
+    const postButton = {
+        template:`
+            <button><slot></slot></button>
+        `
+    }
+
+    // 2.post-li组件
+    const postLi = {
+        props:['item','handleClick'],
+        components:{
+            'post-button':postButton
+        },
+        template: `
+            <li>
+                {{ item }}
+                <post-button @click.native="handleClick">进入</post-button>
+            </li>
+        `
+    }
+
+    // 3.post-list组件
+    const postList = {
+        props:['inputValue'],
+        components:{
+            'post-li':postLi
+        },
+        data (){
+            return {
+                list:['张三','李四','王五']
+            }
+        },
+        template: `
+            <ol>
+                <post-li :key="index" v-for="(value,index) in list" :item="value" :handleClick="handleClick">
+                    {{ value }}
+                </post-li>
+            </ol>
+        `,
+        methods:{
+            handleClick(){
+                console.log('list')
+            }
+        },
+        watch:{
+            inputValue(newValue,oldValue){
+                this.list.push(newValue)
+            }
+        }
+    }
+
+    // 4.post-form组件
+    const postForm =  {
+        components:{
+            'post-button':postButton
+        },
+        data(){
+            return {
+                inputValue:''
+            }
+        },
+        template: `
+            <form @submit.prevent>
+                <input type="text" v-model="inputValue">
+                <post-button @click.native="handleClick">添加</post-button>
+            </form>
+        `,
+        methods:{
+            handleClick(inputValue){
+                // 触发父组件的事件函数，专门的一个函数方法
+                this.$emit('send',this.inputValue)
+            }
+        }
+    }
+
+    // 5.post组件
+    const post = {
+        components:{
+            'post-list':postList,
+            'post-form':postForm
+        },
+        data(){
+            return {
+                inputValue:''
+            }
+        },
+        template: `
+            <div>
+                <post-list :inputValue="inputValue"></post-list>
+                <post-form @send="receiveValue"></post-form>
+            </div>
+        `,
+        methods:{
+            receiveValue(inputValue){
+                this.inputValue = inputValue
+            }
+        }
+    }
+
+    // 根组件
+    let vm = new Vue({
+        el:'#root',
+        components:{
+            'greeting-world':greetingWorld,
+            post
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "name": "package.json",
+  "version": "1.0.0",
+  "description": "vue",
+  "main": "main.js",
+  "scripts": {
+    "test": "cnpm run start"
+  },
+  "repository": {
+    "type": "git",
+    "url": ".git"
+  },
+  "author": "Sirens123",
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "^3.4.1",
+    "webpack-cli": "^3.3.2",
+    "webpack-dev-server": "^3.4.1"
+  }
+}

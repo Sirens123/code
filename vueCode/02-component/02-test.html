@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件传数据基础测试</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+<div id="root">
+    <post></post>
+</div>
+<!--定义全局组件-->
+<!--<script>
+    Vue.config.productionTip = false
+    //全局组件的定义
+    //post组件
+    Vue.component('post',{
+        template:`
+            <div>
+                <post-list></post-list>
+                <post-form></post-form>
+            </div>
+        `
+    })
+    //post-list组件
+    Vue.component('post-list',{
+        template:`
+            <ul>
+                <li>香蕉</li>
+                <li>橘子</li>
+                <li>苹果</li>
+            </ul>
+        `
+    })
+    //post-form组件
+    Vue.component('post-form',{
+        template:`
+            <form>
+                <textarea></textarea>
+                <button>发布</button>
+            </form>
+        `
+    })
+    //post-button组件
+    Vue.component('post-button',{
+        template:`
+            <button></button>
+        `
+    })
+
+
+    // 根组件
+    let vm = new Vue({
+        el: "#root"
+    })
+</script>-->
+
+<!--props传输数据，父组件向子组件传输数据-->
+<!--<script>
+    Vue.config.productionTip = false
+    //全局组件的定义
+    //post组件
+    Vue.component('post', {
+        template: `
+            <div>
+                <post-list></post-list>
+                <post-form></post-form>
+            </div>
+        `
+    })
+    //post-list组件
+    Vue.component('post-list', {
+        data(){
+            return {
+                list:['香蕉','橘子','苹果']
+            }
+        },
+        template: `
+            <ol>
+                <li v-for="value of list">
+                    {{ value }}
+                    <post-button text="进入"></post-button>
+                </li>
+            </ol>
+        `
+    })
+    //post-form组件
+    Vue.component('post-form', {
+        template: `
+            <form @submit.prevent>
+                <textarea></textarea>
+                <post-button text="发布"></post-button>
+            </form>
+        `
+    })
+    //post-button组件
+    Vue.component('post-button', {
+        //使用props属性传输
+        props:['text'],
+        template: `
+            <button> {{text}}</button>
+        `
+    })
+
+
+    // 根组件
+    let vm = new Vue({
+        el: "#root"
+    })
+</script>-->
+
+<!--父组件有不同的点击数件，方法一：不推荐
+ 新增一个v-on:handle属性，还是以props的方式传输-->
+<!--<script>
+    Vue.config.productionTip = false
+    //全局组件的定义
+    //post组件
+    Vue.component('post', {
+        template: `
+            <div>
+                <post-list></post-list>
+                <post-form></post-form>
+            </div>
+        `
+    })
+    //post-list组件
+    Vue.component('post-list', {
+        data() {
+            return {
+                list: ['香蕉', '橘子', '苹果']
+            }
+        },
+        template: `
+            <ol>
+                <li v-for="value of list">
+                    {{ value }}
+                    <post-button text="进入" :handle="handleButtonClick"></post-button>
+                </li>
+            </ol>
+        `,
+        methods:{
+            handleButtonClick(){
+                console.log('list')
+            }
+        }
+    })
+    //post-form组件
+    Vue.component('post-form', {
+        template: `
+            <form @submit.prevent>
+                <textarea></textarea>
+                <post-button text="发布" :handle="handleButtonClick"></post-button>
+            </form>
+        `,
+        methods:{
+            handleButtonClick(){
+                console.log('form')
+            }
+        }
+    })
+    //post-button组件
+    Vue.component('post-button', {
+        //使用props属性传输
+        props: ['text','handle'],
+        template: `
+            <button @click="handle"> {{text}}</button>
+        `
+    })
+
+
+    // 根组件
+    let vm = new Vue({
+        el: "#root"
+    })
+</script>-->
+
+<!--父组件有不同的点击数件，方法二：推荐，原生写法
+ @click.native，子组件只用展示，不用进行事件-->
+<!--<script>
+    Vue.config.productionTip = false
+    //全局组件的定义
+    //post组件
+    Vue.component('post', {
+        template: `
+            <div>
+                <post-list></post-list>
+                <post-form></post-form>
+            </div>
+        `
+    })
+    //post-list组件
+    Vue.component('post-list', {
+        data() {
+            return {
+                list: ['香蕉', '橘子', '苹果']
+            }
+        },
+        template: `
+            <ol>
+                <li v-for="value of list">
+                    {{ value }}
+                    <post-button text="进入" @click.native="handleButtonClick"></post-button>
+                </li>
+            </ol>
+        `,
+        methods: {
+            handleButtonClick() {
+                console.log('list')
+            }
+        }
+    })
+    //post-form组件
+    Vue.component('post-form', {
+        template: `
+            <form @submit.prevent>
+                <textarea></textarea>
+                <post-button text="发布" @click.native="handleButtonClick"></post-button>
+            </form>
+        `,
+        methods: {
+            handleButtonClick() {
+                console.log('form')
+            }
+        }
+    })
+    //post-button组件
+    Vue.component('post-button', {
+        //使用props属性传输
+        props: ['text'],
+        template: `
+            <button> {{text}}</button>
+        `
+    })
+
+
+    // 根组件
+    let vm = new Vue({
+        el: "#root"
+    })
+</script>-->
+<!--兄弟组件之间传输数据，需要使用父组件进行传输，子组件传给父组件，父组件接收然后传给另一个子组件
+比如，form提交数据，新增到list一条数据，需要用到post组件-->
+<!--<script>
+    Vue.config.productionTip = false
+    //全局组件的定义
+    //post组件
+    Vue.component('post', {
+        data(){
+            return {
+                inputValue:''
+            }
+        },
+        template: `
+            <div>
+                <post-list :inputValue="inputValue"></post-list>
+                <post-form @receive="receiveInput"></post-form>
+            </div>
+        `,
+        methods:{
+            receiveInput (inputValue){
+                this.inputValue = inputValue
+            }
+        }
+    })
+
+    //post-list组件
+    Vue.component('post-list', {
+        props:['inputValue'],
+        data () {
+            return {
+                list: ['香蕉', '橘子', '苹果']
+            }
+        },
+        template: `
+            <div>
+                <ol>
+                    <li v-for="value of list">
+                        {{ value }}
+                        <post-button text="进入" @click.native="handleButtonClick"></post-button>
+                    </li>
+                </ol>
+            </div>
+        `,
+        methods: {
+            handleButtonClick() {
+                console.log('list')
+            }
+        },
+        watch:{
+            inputValue (newValue,oldValue){
+                this.list.push(newValue)
+            }
+        }
+
+    })
+
+    //post-form组件
+    Vue.component('post-form', {
+        data (){
+            return {
+                inputValue:""
+            }
+        },
+        template: `
+            <form @submit.prevent>
+                <textarea v-model="inputValue"></textarea>
+                <post-button text="发布" @click.native="handleButtonClick"></post-button>
+            </form>
+        `,
+        methods: {
+            handleButtonClick() {
+                // console.log(this.inputValue)
+                //方法,父组件事件名称，传的参数
+                this.$emit('receive',this.inputValue)
+
+            }
+        }
+    })
+
+    //post-button组件
+    Vue.component('post-button', {
+        //使用props属性传输
+        props: ['text'],
+        template: `
+            <button> {{text}}</button>
+        `
+    })
+
+
+    // 根组件
+    let vm = new Vue({
+        el: "#root"
+    })
+</script>-->
+
+
+
+<!--再来一次兄弟节点传输-->
+<!--<script>
+    Vue.config.productionTip = false
+    //全局组件的定义
+    //post组件
+    Vue.component('post', {
+        data(){
+            return {
+                inputValue:''
+            }
+        },
+        template: `
+            <div>
+                <post-list :inputValue="inputValue"></post-list>
+                <post-form @receive="receiveInput"></post-form>
+            </div>
+        `,
+        methods:{
+            receiveInput (inputValue){
+                this.inputValue = inputValue
+            }
+        }
+    })
+    //post-list组件
+    Vue.component('post-list', {
+        props:['inputValue'],
+        data() {
+            return {
+                list: ['香蕉', '橘子', '苹果']
+            }
+        },
+        template: `
+            <div>
+                <ol>
+                    <li v-for="value of list">
+                        {{ value }}
+                        <post-button text="进入"></post-button>
+                    </li>
+                </ol>
+            </div>
+        `,
+        methods:{
+            handleButtonClick(){
+                console.log('list')
+            }
+        },
+        // 监听inputValue的变化
+        watch:{
+            inputValue(newValue,oldValue){
+                this.list.push(newValue)
+            }
+        }
+    })
+    //post-form组件
+    Vue.component('post-form', {
+        data (){
+            return {
+                inputValue:''
+            }
+        },
+        template: `
+            <form @submit.prevent>
+                <input type="text" v-model="inputValue">
+                <post-button text="发布" @click.native="handleButtonClick"></post-button>
+            </form>
+        `,
+        methods:{
+            handleButtonClick(){
+                // console.log(this.inputValue)
+                console.log(0)
+                this.$emit('receive',this.inputValue)
+            }
+        }
+    })
+    //post-button组件
+    Vue.component('post-button', {
+        //使用props属性传输
+        props: ['text'],
+        template: `
+            <button> {{text}}</button>
+        `
+    })
+
+
+    // 根组件
+    let vm = new Vue({
+        el: "#root"
+    })
+</script>-->
+<!--还来一次兄弟节点的传输-->
+<script>
+    Vue.config.productionTip = false
+
+    // post-button组件
+    Vue.component('post-button',{
+        props:['text'],
+        data(){
+            return {
+
+            }
+        },
+        template:`
+            <button> {{ text }}</button>
+        `,
+        methods: {
+
+        }
+    })
+    // post-list组件
+    Vue.component('post-list', {
+        props:['inputValue'],
+        data(){
+            return {
+                list:['张三','李四','王五']
+            }
+        },
+        template: `
+            <div>
+                <ul>
+                    <li v-for="value of list">
+                        {{ value }}
+                        <post-button text="进入"></post-button>
+                    </li>
+                </ul>
+            </div>
+        `,
+        methods:{
+
+        },
+        watch:{
+            inputValue(newValue,oldValue){
+                this.list.push(newValue)
+            }
+        }
+    })
+    // post-form组件
+    Vue.component('post-form',{
+        data(){
+            return {
+                inputValue:''
+            }
+        },
+        template:`
+            <form @click.submit.prevent>
+                新名字：<input type="text" v-model="inputValue">
+                <post-button text="添加" @click.native="handleInputValue"></post-button>
+            </form>
+        `,
+        methods:{
+            handleInputValue(){
+                // 一个固定的写法，父元素的事件名，传的数据参数
+                this.$emit('receiveValue',this.inputValue)
+            }
+        }
+    })
+    // post组件
+    Vue.component('post',{
+        data(){
+            return {
+                inputValue:''
+            }
+        },
+        template:`
+            <div>
+                <post-list :inputValue="inputValue"></post-list>
+                <post-form @receiveValue = 'receiveValue'></post-form>
+            </div>
+        `,
+        methods:{
+            receiveValue(inputValue){
+                this.inputValue = inputValue
+            }
+        }
+    })
+
+    // 根组件
+    let vm = new Vue({
+        el:'#root'
+    })
+</script>
+
+</body>
+</html>

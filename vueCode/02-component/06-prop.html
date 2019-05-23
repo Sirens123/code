@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>prop</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+<div id="root">
+    <parent-component></parent-component>
+</div>
+<script>
+    Vue.config.productionTip = false
+    // 子组件
+    let ChildComponent = {
+        props:['title'],
+
+
+        template:`
+            <div>{{title}}</div>
+        `
+    }
+    // 父组件
+    let ParentComponent = {
+        components: {
+            ChildComponent
+        },
+        template:`
+            <child-component title="hello"></child-component>
+        `
+    }
+    // 根组件
+    let vm = new Vue({
+        el:'#root',
+        components:{
+            ParentComponent
+        }
+
+    })
+</script>
+</body>
+</html>

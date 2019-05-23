@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>生命周期</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+<div id="root">
+    <div> {{greeting}}</div>
+</div>
+<!--生命周期钩子，又叫生命周期函数-->
+<script>
+    Vue.config.productionTip = false
+
+    let vm = new Vue({
+        el:"#root",
+        data:{
+            greeting:'hello'
+        },
+        // 初始化时期
+        beforeCreate(){
+            console.log(this.$el)
+            console.log(this.greeting)
+        },
+        created() {
+            console.log(this.$el)
+            console.log(this.greeting)
+        },
+        // 组件创建时期
+        beforeMount() {
+            console.log(this.$el.innerHTML)
+            console.log(this.greeting)
+        },
+        mounted() {//解析完全，渲染完成
+            console.log(this.$el.innerHTML)
+            console.log(this.greeting)
+        },
+        // 生存期
+        beforeUpdate() {//已经是修改过得数据
+            console.log('beforeUpdate'+this.greeting)
+        },
+        updated() {
+            console.log('updated'+this.greeting)
+        },
+        // 销毁期
+        // 生存期
+        beforeDestroy() {
+            console.log('beforeDestroy'+this.greeting)
+        },
+        destroyed() {
+            console.log('destroyed'+this.greeting)
+        }
+    })
+</script>
+</body>
+</html>

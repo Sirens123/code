@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-for</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <ul>
+            <li v-for="(fruit,index) in fruits">
+                ({{index}})-{{fruit.name}}
+            </li>
+        </ul>
+        名字:<input type="text" v-model="name">
+        库存:<input type="text" v-model="inventory">
+        <button @click="add">添加</button>
+    </div>
+    <script>
+        Vue.config.productionTip = false
+        let vm = new Vue({
+            data:{
+                name:"",
+                inventory:0,
+                fruits: [
+                            {
+                                "name": "苹果",
+                                "inventory": 3
+                            },
+                            {
+                                "name": "香蕉",
+                                "inventory": 0
+                            },
+                            {
+                                "name": "柠檬",
+                                "inventory": 2
+                            }
+                        ]
+            },
+            methods:{
+                // add
+                add (){
+                    this.fruits.unshift({
+                        name:this.name,
+                        inventory:this.inventory
+                    })
+                }
+            }
+        })
+        //添加根节点
+        vm.$mount("#root")
+    </script>
+</body>
+</html>

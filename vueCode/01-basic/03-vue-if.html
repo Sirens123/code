@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue-if</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+   <!-- <div id="root">
+        &lt;!&ndash; template相当于一个临时标签，只显示过后释放&ndash;&gt;
+        &lt;!&ndash; v-if 和 v-show
+            v-if是把dom节点去掉，v-show是使用style样式来改变显示
+        &ndash;&gt;
+        <template v-if="groupVisible">
+            <div v-show="visible">string 1</div>
+            <div v-show="!visible">string 2</div>
+            <button @click="visible = !visible">切换</button>
+        </template>
+
+        <div v-else>string 3</div>
+        <button @click = "groupVisible = !groupVisible">分组切换</button>
+    </div>
+    <script>
+        Vue.config.productionTip = false
+        let vm = new Vue({
+            el:"#root",
+            data:{
+                visible:true,
+                groupVisible:true
+            }
+        })
+    </script>-->
+<!--   使用key确定每个组件都是完全独立的  -->
+    <div id="root">
+        <template v-if="loginType === 'userName'">
+            <label>用户名</label>
+            <input type="text" placeholder = "请输入用户名" key="input-name">
+        </template>
+        <template v-else>
+            <label>邮箱</label>
+            <input type="text" placeholder = "请输入邮箱" key="input-email">
+        </template>
+        <button @click="change">切换登录方式</button>
+    </div>
+   <script>
+       Vue.config.productionTip = false
+       let vm = new Vue({
+           el:"#root",
+           data:{
+                loginType:"userName"
+           },
+           methods: {
+               change (){
+                    if(this.loginType === "userName"){
+                        this.loginType = "userEmail"
+                    }else {
+                        this.loginType = "userName"
+                    }
+               }
+           }
+       })
+   </script>
+</body>
+</html>

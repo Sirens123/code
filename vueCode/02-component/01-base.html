@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件基础</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <post></post>
+    </div>
+<!--  开始组件基础-->
+    <!--<script>
+        Vue.config.productionTip = false
+        //定义全局组件，使用一个方法，组件可以复用
+        Vue.component('post-list',{
+            // es6里面字符串模板使用反斜号``
+            template:`
+                <div>
+                    <ul>
+                        <li v-for="value of list">
+                            {{value}}
+                            <post-button :handle="handleButtonClick" text="进入"></post-button>
+&lt;!&ndash;                            <button @click="handleButtonClick">进入</button>&ndash;&gt;
+                        </li>
+                    </ul>
+                </div>
+            `,
+            // 组件里面的data是个函数，返回值是个对象
+            data (){
+                return {
+                    list: [
+                        '苹果','香蕉','橘子'
+                    ]
+                }
+            },
+            methods: {
+                handleButtonClick (){
+                    // this.list.push("草莓")
+                    console.log('list')
+                }
+            }
+        })
+
+        Vue.component('post-form',{
+            template:`
+                <form @submit.prevent>
+                    <textarea></textarea>
+                    <div>
+                        <post-button text="发布" :handle="handleButtonClick"></post-button>
+                    </div>
+                </form>
+            `,
+            methods: {
+                handleButtonClick() {
+
+                    console.log('form')
+                }
+            }
+
+        })
+        // 组件可以嵌套组件
+        Vue.component('post',{
+            template:`
+                <div>
+                    <post-list></post-list>
+                    <post-form></post-form>
+                </div>
+            `
+        })
+        // 子组件从父组件里面接收数据，props
+        Vue.component('post-button', {
+            // 在子组件里面设置一个属性props，来接收从父组件里面传来的数据，相当于一个data属性
+            //从父组件里传递过来的属性
+            //在组件内部不能去修改，只能读，不能写
+            props:['text','handle'],
+
+            //data里定义的属性在组件内部作用域下使用
+            //同时将data的属性称为组件内部的状态
+            data(){
+                return {
+                    test:"取消"
+                }
+            },
+            // 通过调用不同的方法来进行不同的事件处理
+            template: `
+                <button @click="handle"> {{ text }} </button>
+            `,
+            methods: {
+
+            }
+            /*已废弃，太麻烦
+            template: `
+                <button @click="handleButtonClick"> {{ text }} </button>
+            `,
+            methods:{
+                // 点击按钮的方法
+                handleButtonClick() {
+                    console.log(0)
+                    if(){
+
+                    }else{
+
+                    }
+                }
+            }*/
+        })
+
+        let vm = new Vue({
+            el:"#root"
+        })
+
+    </script>-->
+<!--    有效的不同事件的绑定方法-->
+    <script>
+        Vue.config.productionTip = false
+        //定义全局组件，使用一个方法，组件可以复用
+        Vue.component('post-list', {
+            // es6里面字符串模板使用反斜号``
+            template: `
+                <div>
+                    <ul>
+                        <li v-for="value of list">
+                            {{value}}
+                            <post-button text="进入" @click.native="handleButtonClick"></post-button>
+<!--                            <button @click="handleButtonClick">进入</button>-->
+                        </li>
+                    </ul>
+                </div>
+            `,
+            // 组件里面的data是个函数，返回值是个对象
+            data() {
+                return {
+                    list: [
+                        '苹果', '香蕉', '橘子'
+                    ]
+                }
+            },
+            methods: {
+                handleButtonClick() {
+                    // this.list.push("草莓")
+                    console.log('list')
+                }
+            }
+        })
+
+        Vue.component('post-form', {
+            template: `
+                <form @submit.prevent>
+                    <textarea></textarea>
+                    <div>
+                        <post-button text="发布" @click.native="handleButtonClick"></post-button>
+                    </div>
+                </form>
+            `,
+            methods: {
+                handleButtonClick() {
+                    // console.log('form')
+
+                }
+            }
+
+        })
+        // 组件可以嵌套组件
+        Vue.component('post', {
+            template: `
+                <div>
+                    <post-list></post-list>
+                    <post-form></post-form>
+                </div>
+            `
+        })
+        // 子组件从父组件里面接收数据，props
+        Vue.component('post-button', {
+            props: ['text'],
+
+            data() {
+                return {
+                    test: "取消"
+                }
+            },
+            // 通过调用不同的方法来进行不同的事件处理
+            template: `
+                <button> {{ text }} </button>
+            `,
+            methods: {
+
+            }
+
+        })
+
+        let vm = new Vue({
+            el: "#root"
+        })
+
+    </script>
+</body>
+</html>

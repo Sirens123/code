@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>form表单</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+    <div id="root">
+    <!-- 学习 v-model双向绑定-->
+        <div>
+            <input type="text" v-model.trim="input">
+            {{ input }} {{addValue}}
+        </div>
+        <!--<div>
+            <textarea name="" id="" cols="30" rows="10" v-model="textarea"></textarea>
+            {{textarea}}
+
+        </div>-->
+        <!--<div>
+            <select name="" id="" v-model="selected" multiple>
+                <option>北京</option>
+                <option>上海</option>
+                <option>广州</option>
+            </select>
+            {{selected}}
+        </div>-->
+        <!--<div>
+            篮球：<input type="checkbox" v-model="checkValue" value="lanqiu">
+            足球：<input type="checkbox" v-model="checkValue" value="zuqiu">
+            羽毛球：<input type="checkbox" v-model="checkValue" value="yumaoqiu">
+            {{ checkValue }}
+        </div>-->
+        <!--<div>
+            篮球：<input type="radio" v-model="radio" value="lanqiu">
+            足球：<input type="radio" v-model="radio" value="zuqiu">
+            羽毛球：<input type="radio" v-model="radio" value="yumaoqiu">
+            {{radio}}
+        </div>-->
+
+    </div>
+
+    <script>
+        Vue.config.productionTip = false
+        let vm = new Vue({
+            el:"#root",
+            data:{
+                input:"哈哈哈",
+                textarea:"这是textarea输入框",
+                selected:"",
+                checkValue:[],
+                radio:""
+
+            },
+            computed:{
+                addValue(){
+                    return this.input + 5
+                }
+
+            }
+        })
+    </script>
+</body>
+</html>
