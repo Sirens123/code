@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-once</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+
+<div id="root">
+    <!--v-once只渲染一次-->
+    <div v-once>{{hello}}</div>
+    <div v-color:red>hello world</div>
+</div>
+<script>
+    /*
+    第三方库：
+    underscore:知名js函数编程方法库
+    lodash:
+    */
+
+
+    // 全局定义
+    Vue.directive('color',{
+        inserted(el,binding){
+            el.style.color = binding.arg
+            /*console.log(binding.expression)//原封不动地输出
+            console.log(binding.value)//输出计算后的结果
+            */
+        }
+    })
+
+    let vm = new Vue({
+        el:"#root",
+        data:{
+            hello:'你好'
+        },
+        // 局部定义指令
+        directives:{
+            color(el, binding){
+                el.style.color = binding.arg
+                /*console.log(binding.expression)//原封不动地输出
+                console.log(binding.value)//输出计算后的结果
+                */
+            }
+        }
+    })
+</script>
+</body>
+</html>

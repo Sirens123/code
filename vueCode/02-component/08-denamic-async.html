@@ -7,11 +7,144 @@
 </head>
 <body>
 <div id="root"></div>
-<script>
+<!--动态组件
+    <keep-alive></keep-alive> 失活的组件将会被缓存
+    有两个钩子，专门用于解决keep-alive不会刷新的问题,
+    activated,deactivated
+-->
+<!--<script>
+    // 设置开发环境
     Vue.config.productionTip = false
 
+    const comp1 = {
+        template:`
+            <div>这是comp1</div>
+        `,
+        mounted(){
+            console.log('mounted')
+        },
+        activated(){
+            // 重新激活缓存的组件
+            console.log('activated')
+        },
+        deactivated() {
+            console.log('deactivated')
+        }
+    }
+    const comp2 = {
+        template: `
+            <div>这是comp2</div>
+        `,
+        mounted() {
+            console.log('mounted')
+        }
+    }
+    const comp3 = {
+        template: `
+            <div>这是comp3</div>
+        `,
+        mounted (){
+            console.log('mounted')
+        }
+    }
+
     let vm = new Vue({
-        el:"#root"
+        el:"#root",
+        data:{
+            current:comp1,
+            buts:[comp1,comp2,comp3]
+        },
+        template:`
+            <div>
+                <button
+                 @click="handleButtonClick(value)"
+                 v-for="value,index in buts">
+                    {{'comp'+(index + 1)}}
+                 </button>
+               &lt;!&ndash; <button>按钮组件 1</button>
+                <button>按钮组件 2</button>
+                <button>按钮组件 3</button>&ndash;&gt;
+                <keep-alive>
+                    <component :is="current"></component>
+                </keep-alive>
+
+            </div>
+        `,
+        methods:{
+            handleButtonClick(comp){
+                this.current = comp
+            }
+        }
+    })
+</script>-->
+
+
+<!--异步组件
+组件需要的时候，在加载
+-->
+<script>
+    // 设置开发环境
+    Vue.config.productionTip = false
+
+    const comp1 = {
+        template: `
+            <div>这是comp1</div>
+        `,
+        mounted() {
+            console.log('mounted')
+        },
+        activated() {
+            // 重新激活缓存的组件
+            console.log('activated')
+        },
+        deactivated() {
+            console.log('deactivated')
+        }
+    }
+    const comp2 = {
+        template: `
+            <div>这是comp2</div>
+        `,
+        mounted() {
+            console.log('mounted')
+        }
+    }
+    const comp3 = {
+        template: `
+            <div>这是comp3</div>
+        `,
+        mounted() {
+            console.log('mounted')
+        }
+    }
+
+    let vm = new Vue({
+        el: "#root",
+        data: {
+            current: comp1,
+            buts: [comp1, comp2, comp3]
+        },
+        template: `
+            <div>
+                <button
+                 @click="handleButtonClick(value)"
+                 v-for="value,index in buts">
+                    {{'comp'+(index + 1)}}
+                 </button>
+               <!-- <button>按钮组件 1</button>
+                <button>按钮组件 2</button>
+                <button>按钮组件 3</button>-->
+                <keep-alive>
+                    <component :is="current"></component>
+                </keep-alive>
+
+            </div>
+        `,
+        methods: {
+            handleButtonClick(comp) {
+                this.current = comp
+            }
+        }
     })
 </script>
 </body>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>混入</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+<div id="root">
+    <div>{{x}}</div>
+    <button @click="sayHi">click</button>
+</div>
+<script>
+    // 两个对象进行了合并，有合并规则
+
+
+    // 鸭子模型，混入对象不是组件是一个对象，一切都能混入
+    // 混入对象里面的data是个对象，浅层拷贝
+    const myMixin = {
+        data:{
+            x:1
+        },
+        methods:{
+            sayHi(){
+                alert('sayhi'+'hello')
+            }
+        }
+    }
+
+    const vm = new Vue({
+        el:"#root",
+        data:{
+            y:2,
+            x:3,
+            x:4
+        },
+        methods: {
+            sayHi() {
+                alert('sayhi' + 'world')
+            }
+        },
+        // 引入混入对象的写法
+        mixins:[myMixin]
+    })
+</script>
+</body>
+</html>

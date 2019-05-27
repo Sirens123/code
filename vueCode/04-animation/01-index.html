@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>动画</title>
+    <script src="vue.js"></script>
+    <link rel="stylesheet" href="animate.css">
+<!--    transition动画-->
+    <!--<style>
+        /*vue提供的类名，也可以使用自定义的名字*/
+       /* .v-enter{
+            opacity:0;
+        }
+        .v-enter-to{
+            opacity:1;
+        }
+        .v-enter-active{
+            transition:opacity 2s;
+        }
+        .v-leave{
+            opacity:1;
+        }
+
+        .v-leave-to {
+            opacity:0;
+        }
+
+        .v-leave-active {
+            transition:opacity 2s;
+        }*/
+
+        .fade-enter {
+            transform:translateX(0px);
+        }
+
+        .fade-enter-to {
+            transform: translateX(100px);
+        }
+
+        .fade-enter-active {
+            transition: all 2s;
+        }
+
+        .fade-leave {
+            transform: translateX(100px);
+        }
+
+        .fade-leave-to {
+            transform: translateX(0px);
+        }
+
+        .fade-leave-active {
+            transition: all 2s;
+        }
+    </style>-->
+<!--    animation动画-->
+    <!--<style>
+        @keyframes move-in{
+            0% {
+                transform:rotate(0deg);
+
+            }
+            50% {
+                transform: rotate(90deg);
+
+            }
+            100% {
+                transform: rotate(180deg);
+
+            }
+        }
+
+        @keyframes move-out {
+            0% {
+                transform: scale(1);
+
+            }
+            50% {
+                transform: scale(2);
+
+            }
+            100% {
+                transform: scale(3);
+
+            }
+        }
+        .move-enter-active{
+            animation:move-in 3s;
+            transform-origin: center center;
+        }
+        .move-leave-active{
+            animation:move-out 3s;
+            transform-origin: center center;
+        }
+    </style>-->
+<!--    !!!第三方动画库-->
+<!--    自己练习代码-->
+    <style>
+
+    </style>
+</head>
+<body>
+<!--<div id="root">
+&lt;!&ndash;    transition，包在组件外面,在transition里面可以加名字&ndash;&gt;
+    &lt;!&ndash;<transition name="fade">
+        <div v-if="show">
+            animation
+        </div>
+    </transition>&ndash;&gt;
+
+&lt;!&ndash;    animation动画，固定模式：animated一定要写，后面跟类名&ndash;&gt;
+    <transition
+            name="move"
+            enter-active-class="animated slideInRight"
+            leave-active-class="animated slideOutRight">
+        <div v-if="show" style="width:100px;height:100px;border:1px solid blue;">
+            animation
+        </div>
+    </transition>
+
+    <button @click="toggle">toggle</button>
+</div>-->
+<!--练习代码-->
+<div id="root">
+    <transition
+            name="fade"
+            enter-active-class="animated fadeInRight"
+            leave-active-class="animated fadeOutRight"
+    >
+        <div v-if="show">
+            transition
+        </div>
+    </transition>
+    <button @click="toggle">toggle</button>
+</div>
+<!--组件被加载时有动画
+第三方动画库：animate.css-->
+<script>
+    Vue.config.productionTip = false
+    let vm = new Vue({
+        el:"#root",
+        data:{
+            show:true
+        },
+        methods:{
+            toggle(){
+                this.show = !this.show
+            }
+        }
+    })
+</script>
+</body>
+</html>

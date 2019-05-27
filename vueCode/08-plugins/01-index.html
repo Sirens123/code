@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>插件</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+<div id="root">
+    <div v-color="'blue'">hello</div>
+</div>
+<script>
+    // 定义插件
+    let myPlugin = {}
+    myPlugin.install = function(Vue,options){
+        Vue.directive('color',function(el,binding){
+            el.style.color = binding.value || options.x
+        })
+    }
+
+    Vue.use(myPlugin,{x:'red'}) //使用插件
+
+    let vm = new Vue({
+        el:"#root"
+    })
+</script>
+</body>
+</html>

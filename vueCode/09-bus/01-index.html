@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>bus总线</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+<!--只在小项目中会用到，大型项目使用vuex工具-->
+<div id="root">
+    <post></post>
+</div>
+<script>
+
+    const PostListItem = {
+        template:`
+            <li>item</li>
+        `
+    }
+    const PostList = {
+        template:`
+            <ul>
+                <post-list-item></post-list-item>
+                <post-list-item></post-list-item>
+                <post-list-item></post-list-item>
+            </ul>
+
+        `,
+        components:{
+            PostListItem
+        }
+    }
+    const PostForm = {
+        template:`
+            <input type="text" value="aa" />
+        `
+    }
+    const Post = {
+        template:`
+            <div>
+                <post-list></post-list>
+                <post-form></post-form>
+            </div>
+        `,
+        components:{
+            PostList,
+            PostForm
+
+        }
+    }
+
+    let vm = new Vue({
+        el:"#root",
+        components:{
+            Post
+        }
+    })
+</script>
+</body>
+</html>
