@@ -13,7 +13,7 @@
   "author": "Sirens123",
   "license": "ISC",
   "dependencies": {
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "vue-bus": "^1.2.1",
     "webpack-cli": "^3.3.2",
     "webpack-dev-server": "^3.4.1"
